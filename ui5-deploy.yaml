@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "3.1"
+metadata:
+  name: sap.ui.demo.basictemplate
+type: application
+builder:
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        ignoreCertError: true
+        target:
+          url: http://sapgd1ap.hec.go-jek.com:8000
+          client: "100"
+          auth: basic
+        credentials:
+          username: env:DEPLOY_USER
+          password: env:DEPLOY_PASS
+        log: 1
+        app:
+          name: ZTST_UI5TOOLING
+          description: test using ui5tooling
+          package: "ZFIORI"
+          transport: "GD1K917483"
+        exclude:
+          - /resources/jquery*
+          - /resources/sap*
+          - /resources/ui5*
+          - .nojekyll

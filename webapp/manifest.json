@@ -10,7 +10,16 @@
 		"title": "{{appTitle}}",
 		"description": "{{appDescription}}",
 		"resources": "resources.json",
-		"ach": "ach"
+		"ach": "ach",
+		"dataSources": {
+			"ZGW_TEST_SRV": {
+				"uri": "/sap/opu/odata/sap/ZGW_TEST_SRV/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/ZGW_TEST_SRV/metadata.xml"
+				}
+			}
+		}
 	},
 
 	"sap.ui": {
@@ -27,7 +36,8 @@
 			"desktop": true,
 			"tablet": true,
 			"phone": true
-		}
+		},
+		"fullWidth": true
 	},
 
 	"sap.ui5": {
@@ -55,6 +65,16 @@
 				"settings": {
 					"bundleName": "sap.ui.demo.basicTemplate.i18n.i18n"
 				}
+			},
+			"": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "ZGW_TEST_SRV",
+				"preload": true
 			}
 		},
 		"resources": {
@@ -69,6 +89,10 @@
 				"viewPath": "sap.ui.demo.basicTemplate.view",
 				"controlId": "app",
 				"controlAggregation": "pages",
+				"transition": "slide",
+				"bypassed": {
+					"target": "notFound"
+				 },
 				"async": true
 			},
 			"routes": [
@@ -76,14 +100,27 @@
 					"pattern": "",
 					"name": "home",
 					"target": ["home"]
+				}, {
+					"pattern": "detail/{Bukrs},{Belnr},{Gjahr}",
+					"name": "detail",
+					"target": "detail"
 				}
 			],
 			"targets": {
 				"home": {
 					"viewName": "Home",
 					"viewId": "home",
-					"viewLevel": 1,
-					"title": "{i18n>title}"
+					"viewLevel": 1
+				},
+				"notFound": {
+				   "viewName": "NotFound",
+				   "viewId": "notFound",
+				   "transition": "show"
+				},
+				"detail": {
+					"viewName": "Detail",
+					"viewId": "detail",
+					"viewLevel" : 2
 				}
 			}
 		}

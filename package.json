@@ -1,24 +1,53 @@
 {
-  "name": "openui5-basic-template-app",
-  "version": "0.1.0",
+  "name": "sap.ui.demo.basictemplate",
+  "version": "0.0.1",
   "description": "Best-practice starting point for building a freestyle app",
   "private": true,
   "scripts": {
-    "start": "ui5 serve",
     "lint": "eslint webapp",
     "karma": "karma start",
     "karma-ci": "karma start karma-ci.conf.js",
     "watch": "npm run karma",
     "test": "npm run lint && rimraf coverage && npm run karma-ci",
-    "build": "rimraf dist && ui5 build --a"
+    "start_old": "ui5 serve",
+    "build_old": "rimraf dist && ui5 build --a",
+    "start": "fiori run --open test/flpSandbox.html#app-tile",
+    "start-local": "fiori run --config ./ui5-local.yaml --open test/flpSandboxMockServer.html#app-tile",
+    "start-noflp": "fiori run --open 'index.html'",
+    "build": "ui5 build -a --clean-dest --include-task=generateManifestBundle generateCachebusterInfo",
+    "deploy": "npm run build && fiori deploy --config ui5-deploy.yaml && rimraf archive.zip",
+    "deploy-config": "fiori add deploy-config",
+    "start-mock": "fiori run --open 'test/flpSandboxMockServer.html#app-tile'",
+    "suite-tests": "fiori run --open 'test/testsuite.qunit.html'",
+    "unit-tests": "fiori run --open 'test/unit/unitTests.qunit.html'",
+    "int-tests": "fiori run --open 'test/integration/opaTests.qunit.html'",
+    "undeploy": "fiori undeploy --config ui5-deploy.yaml"
   },
   "devDependencies": {
-    "@ui5/cli": "^2.10.3",
-    "eslint": "^7.25.0",
+    "@openui5/ts-types": "^1.95.0",
+    "@sap/ux-ui5-tooling": "^1.11.2",
+    "@ui5/cli": "^3.7.1",
+    "@ui5/fs": "^2.0.6",
+    "@ui5/logger": "^2.0.1",
+    "eslint": "^7.32.0",
     "karma": "^6.3.2",
     "karma-chrome-launcher": "^3.1.0",
     "karma-coverage": "^2.0.3",
     "karma-ui5": "^2.3.3",
-    "rimraf": "^3.0.2"
+    "moment": "^2.29.1",
+    "qunit": "^2.17.2",
+    "rimraf": "3.0.2",
+    "ui5-middleware-livetranspile": "^0.3.2"
+  },
+  "keywords": [
+    "ui5",
+    "openui5",
+    "sapui5"
+  ],
+  "main": "webapp/index.html",
+  "ui5": {
+    "dependencies": [
+      "moment"
+    ]
   }
 }
